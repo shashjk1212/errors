@@ -1,0 +1,33 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HouseRental {
+    address public owner;
+    uint256 public subscriptionCost = 500;
+    uint256 public maxContacts = 25;
+    uint256 public usedContacts;
+    uint256 public rentedHouses;
+
+    mapping(address => bool) public subscribers;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+
+    function getSubscription(uint256 _amountPaid) external payable {
+        require(_amountPaid >= subscriptionCost, "Please provide 500 or more to get subscription");
+        require(!subscribers[msg.sender], "Already subscribed");
+
+        subscribers[msg.sender] = true;
+    }
+
+
+    function rentHouse(uint256 _numberOfHouses) external {
+    
+        assert(_numberOfHouses>0); 
+        if(_numberOfHouses>5)
+revert("you cant rent more than 5");
+        rentedHouses += _numberOfHouses;
+    }
+}
